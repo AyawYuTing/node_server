@@ -1,12 +1,7 @@
 'use strict';//打开Javascript的"strict mode"
 
-//引入express模块，设置路由
+//引入express模块
 var app = require('express')()
-var index = require('./routes/index');
-app.use('/', index);
-var users = require('./routes/users');
-app.use('/users', users);
-
 // 使用 session 中间件
 var session = require('express-session');
 app.use(session({
@@ -18,14 +13,14 @@ app.use(session({
     },
 }));
 // 使用bodyparder中间件，
-var bodyParser = require('body-parser');
+var bodyParser = require("body-parser");
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded());
 
 //解决本地跨域问题
 app.all('*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With,Authorization,content-Type,Accept");
     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
     res.header("X-Powered-By",' 3.2.1');
     res.header("Content-Type", "application/json;charset=utf-8");
@@ -39,4 +34,10 @@ app.set('view engine','html')
 
 app.listen(3000) //监听端口
 
+
+// 设置路由
+var index = require('./routes/index');
+app.use('/', index);
+var users = require('./routes/users');
+app.use('/users', users);
 
