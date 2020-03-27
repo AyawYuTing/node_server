@@ -40,4 +40,5 @@ var index = require('./routes/index');
 app.use('/', index);
 var users = require('./routes/users');
 app.use('/users', users);
-
+var categories = require('./routes/cate');
+app.use('/categories', categories)
